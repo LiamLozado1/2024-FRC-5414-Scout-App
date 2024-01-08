@@ -15,28 +15,37 @@
   
   <div class="container">
     <div class="input-form">
+
       <p class="preMatchTitle">Pre-Match</p>
 
-      <!--Example Text Field-->
       <label>Scouter Name</label>
       <input type="text" class="scouterNameField" placeholder="Scouter Name">
+
+      <label>Team Number</label>
+      <input type="number" class="teamNumberField" placeholder="Team Number">
 
       <!--No Show hides certain elements if team does not show up to a match-->
       <label for="noShow">No Show</label>
       <input type="checkbox" id="noShow" class="noShow">
       <div id="noShowToggle">
-        
-        <!--Example Radio Question-->
-        <div class="radio">
-          <p class="radioTitle">Example Radio Question</p>
-          <div class="radioInput">
-            <label for="exampleRadioQuestion1" class="radioLabel">1</label>
-            <input type="radio" name="exampleRadioQuestion" value="1"/>
-            <label for="exampleRadioQuestion2" class="radioLabel">2</label>
-            <input type="radio" name="exampleRadioQuestion" value="2"/>
-          </div>
+
+      <div class="radio">
+        <p class="radioTitle">Start Position</p>
+        <div class="radioInput">
+          <label class="radioLabel">1</label>
+          <input type="radio" name="startPosition" value="1"/>
+          <label class="radioLabel">2</label>
+          <input type="radio" name="startPosition" value="2"/>
+          <label class="radioLabel">3</label>
+          <input type="radio" name="startPosition" value="3"/>
+          <label class="radioLabel">4</label>
+          <input type="radio" name="startPosition" value="4"/>
         </div>
-        
+      </div>
+
+      <label for="preLoad">Pre-Load Scored</label>
+      <input name="exampleCheckbox" id="exampleCheckbox" class="exampleCheckbox" type="checkbox">
+
         <!--Example Number Stepper-->
         <p class="numberStepperTitle">Example Number Stepper</p>
         <div class="numberStepper" id="numberStepper">
@@ -1075,8 +1084,9 @@
     var container = document.querySelector(".container");
     var generateBtn = document.querySelector(".generate-btn");
     var scouterNameField = document.querySelector(".scouterNameField");
+    var teamNumberField = document.querySelector(".teamNumberField");
     var noShow = document.querySelector(".noShow");
-    let exampleRadioQuestion = document.querySelectorAll('input[name="exampleRadioQuestion"]');
+    let startPosition = document.querySelectorAll('input[name="startPosition"]');
     var exampleCheckbox = document.querySelector(".exampleCheckbox");
 
     let qr_code_counter = 0;
@@ -1086,15 +1096,15 @@
           qr_code_counter++;
 
           // Checks for a unanswered radio and replaces it with a blank string for easier reading later on
-          if (exampleRadioQuestion != "1" && exampleRadioQuestion != "2") {
-            exampleRadioQuestion = "";
+          if (startPosition != "1" && startPosition != "2" && startPosition != "3" && startPosition != "4") {
+            startPosition = "";
           }
 
           // Creates a variable to hold all the data collected
           generateBtn.innerText = "Generating QR Code...";
           //The spacer automatically puts each input into seperate columns when exporting to Google Sheets
           let spacer = "	";
-          let data = scouterNameField.value + spacer + noShow.checked + spacer + exampleRadioQuestion + spacer + numberOfContext + spacer + exampleCheckbox.checked;
+          let data = scouterNameField.value + spacer + teamNumberField.value + spacer + noShow.checked + spacer + startPosition + spacer + numberOfContext + spacer + exampleCheckbox.checked;
 
           // fixes bug in QR Library where the code may not work right between these number of characters
           if (data.length > 192 && data.length < 220) {
@@ -1135,12 +1145,12 @@
   }
   
     // Example Radio
-    let findSelectedexampleRadioQuestion = () => {
-      exampleRadioQuestion = document.querySelector("input[name='exampleRadioQuestion']:checked").value;
+    let findSelectedstartPosition = () => {
+      startPosition = document.querySelector("input[name='startPosition']:checked").value;
     }
 
-    exampleRadioQuestion.forEach(exampleRadioQuestion => {
-      exampleRadioQuestion.addEventListener("change", findSelectedexampleRadioQuestion);
+    startPosition.forEach(startPosition => {
+      startPosition.addEventListener("change", findSelectedstartPosition);
     });
 
     //No Show Toggle
