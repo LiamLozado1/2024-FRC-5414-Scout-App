@@ -12,6 +12,7 @@
   <p id="fullscreenBTN">&#x26F6;</p>
 
   <p class="mainTitle">Scout App</p>
+  <img src="./img/crescendo.png" height="200px" style="margin-bottom: 1rem;">
   
   <div class="container">
     <div class="input-form">
@@ -43,9 +44,46 @@
         </div>
       </div>
 
-      <label for="preLoad">Pre-Load Scored</label>
-      <input name="exampleCheckbox" id="exampleCheckbox" class="exampleCheckbox" type="checkbox">
+      <p class="preMatchTitle">Autonomous</p>
 
+      <label for="preLoad">Pre-Load Scored</label>
+      <input name="preLoad" class="preLoadScored" type="checkbox">
+
+      <label for="leftStartZone">Left Starting Zone</label>
+      <input name="leftStartZone" class="leftStartZone" type="checkbox">
+
+      <p class="numberStepperTitle">AMP</p>
+        <div class="numberStepper" id="numberStepper">
+          <span class="autoAMPnumberStepperMinus" id="numberStepperMinus">&minus;</span>
+          <span class="autoAMPnumberStepperNumber" id="numberStepperNumber">0</span>
+          <span class="autoAMPnumberStepperPlus" id="numberStepperPlus">+</span>
+        </div>
+      
+      <p class="numberStepperTitle">Speaker</p>
+        <div class="numberStepper" id="numberStepper">
+          <span class="autoSpeakernumberStepperMinus" id="numberStepperMinus">&minus;</span>
+          <span class="autoSpeakernumberStepperNumber" id="numberStepperNumber">0</span>
+          <span class="autoSpeakernumberStepperPlus" id="numberStepperPlus">+</span>
+        </div>
+
+        <p class="preMatchTitle">Tele-Op</p>
+
+        <p class="numberStepperTitle">AMP</p>
+        <div class="numberStepper" id="numberStepper">
+          <span class="teleAMPnumberStepperMinus" id="numberStepperMinus">&minus;</span>
+          <span class="teleAMPnumberStepperNumber" id="numberStepperNumber">0</span>
+          <span class="teleAMPnumberStepperPlus" id="numberStepperPlus">+</span>
+        </div>
+      
+      <p class="numberStepperTitle">Speaker</p>
+        <div class="numberStepper" id="numberStepper">
+          <span class="teleSpeakernumberStepperMinus" id="numberStepperMinus">&minus;</span>
+          <span class="teleSpeakernumberStepperNumber" id="numberStepperNumber">0</span>
+          <span class="teleSpeakernumberStepperPlus" id="numberStepperPlus">+</span>
+        </div>
+
+        <p class="preMatchTitle">End Game</p>
+     
         <!--Example Number Stepper-->
         <p class="numberStepperTitle">Example Number Stepper</p>
         <div class="numberStepper" id="numberStepper">
@@ -102,7 +140,7 @@
       background-color: rgb(255, 208, 0);
       padding: 20px;
       border-radius: 7px;
-      margin: 4rem 0;
+      margin: 1.5rem 0 1rem 0;
     }
 
     .container {
@@ -253,6 +291,7 @@
     }
 
     .generate-btn {
+    
       border: none;
       background-color: #57bf32;
       font-size: 2rem;
@@ -1087,6 +1126,8 @@
     var teamNumberField = document.querySelector(".teamNumberField");
     var noShow = document.querySelector(".noShow");
     let startPosition = document.querySelectorAll('input[name="startPosition"]');
+    var preLoadScored = document.querySelector(".preLoadScored");
+    var leftStartZone = document.querySelector(".leftStartZone");
     var exampleCheckbox = document.querySelector(".exampleCheckbox");
 
     let qr_code_counter = 0;
@@ -1104,7 +1145,7 @@
           generateBtn.innerText = "Generating QR Code...";
           //The spacer automatically puts each input into seperate columns when exporting to Google Sheets
           let spacer = "	";
-          let data = scouterNameField.value + spacer + teamNumberField.value + spacer + noShow.checked + spacer + startPosition + spacer + numberOfContext + spacer + exampleCheckbox.checked;
+          let data = scouterNameField.value + spacer + teamNumberField.value + spacer + noShow.checked + spacer + startPosition + spacer + preLoadScored.checked + spacer + leftStartZone.checked + spacer + autoAMP + spacer + autoSpeaker + spacer + teleAMP + spacer + teleSpeaker + spacer + numberOfContext + spacer + exampleCheckbox.checked;
 
           // fixes bug in QR Library where the code may not work right between these number of characters
           if (data.length > 192 && data.length < 220) {
@@ -1129,7 +1170,7 @@
           generateBtn.innerText = "Generated";
           
         } else {
-          generateBtn.innerText = "Missing example text field!";
+          generateBtn.innerText = "Missing Scout Name!";
           setInterval(generateBtnReset, 2000);
           function generateBtnReset() {
             generateBtn.innerText = "Generate";
@@ -1161,6 +1202,84 @@
             noShowToggle.style.display = 'none';
         } else {
             noShowToggle.style.display = 'flex';
+        }
+    });
+
+    //Auto AMP Number Counter
+    const autoAMPNumberStepperPlus = document.querySelector(".autoAMPnumberStepperPlus"),
+        autoAMPNumberStepperMinus = document.querySelector(".autoAMPnumberStepperMinus"),
+        autoAMPNumberStepperNumber = document.querySelector(".autoAMPnumberStepperNumber");
+    let autoAMP = 0;
+    autoAMPNumberStepperPlus.addEventListener("click", () => {
+        autoAMP++;
+        autoAMP = (autoAMP < 10) ? "" + autoAMP : autoAMP;
+        autoAMPNumberStepperNumber.innerText = autoAMP;
+    });
+
+    autoAMPNumberStepperMinus.addEventListener("click", () => {
+        if (autoAMP > 0) {
+            autoAMP--;
+            autoAMP = (autoAMP < 10) ? "" + autoAMP : autoAMP;
+            autoAMPNumberStepperNumber.innerText = autoAMP;
+        }
+    });
+
+    
+    //Auto Speaker Number Counter
+    const autoSpeakerNumberStepperPlus = document.querySelector(".autoSpeakernumberStepperPlus"),
+        autoSpeakerNumberStepperMinus = document.querySelector(".autoSpeakernumberStepperMinus"),
+        autoSpeakerNumberStepperNumber = document.querySelector(".autoSpeakernumberStepperNumber");
+    let autoSpeaker = 0;
+    autoSpeakerNumberStepperPlus.addEventListener("click", () => {
+        autoSpeaker++;
+        autoSpeaker = (autoSpeaker < 10) ? "" + autoSpeaker : autoSpeaker;
+        autoSpeakerNumberStepperNumber.innerText = autoSpeaker;
+    });
+
+    autoSpeakerNumberStepperMinus.addEventListener("click", () => {
+        if (autoSpeaker > 0) {
+            autoSpeaker--;
+            autoSpeaker = (autoSpeaker < 10) ? "" + autoSpeaker : autoSpeaker;
+            autoSpeakerNumberStepperNumber.innerText = autoSpeaker;
+        }
+    });
+
+    //Tele AMP Number Counter
+    const teleAMPNumberStepperPlus = document.querySelector(".teleAMPnumberStepperPlus"),
+        teleAMPNumberStepperMinus = document.querySelector(".teleAMPnumberStepperMinus"),
+        teleAMPNumberStepperNumber = document.querySelector(".teleAMPnumberStepperNumber");
+    let teleAMP = 0;
+    teleAMPNumberStepperPlus.addEventListener("click", () => {
+        teleAMP++;
+        teleAMP = (teleAMP < 10) ? "" + teleAMP : teleAMP;
+        teleAMPNumberStepperNumber.innerText = teleAMP;
+    });
+
+    teleAMPNumberStepperMinus.addEventListener("click", () => {
+        if (teleAMP > 0) {
+            teleAMP--;
+            teleAMP = (teleAMP < 10) ? "" + teleAMP : teleAMP;
+            teleAMPNumberStepperNumber.innerText = teleAMP;
+        }
+    });
+
+    
+    //Tele Speaker Number Counter
+    const teleSpeakerNumberStepperPlus = document.querySelector(".teleSpeakernumberStepperPlus"),
+        teleSpeakerNumberStepperMinus = document.querySelector(".teleSpeakernumberStepperMinus"),
+        teleSpeakerNumberStepperNumber = document.querySelector(".teleSpeakernumberStepperNumber");
+    let teleSpeaker = 0;
+    teleSpeakerNumberStepperPlus.addEventListener("click", () => {
+        teleSpeaker++;
+        teleSpeaker = (teleSpeaker < 10) ? "" + teleSpeaker : teleSpeaker;
+        teleSpeakerNumberStepperNumber.innerText = teleSpeaker;
+    });
+
+    teleSpeakerNumberStepperMinus.addEventListener("click", () => {
+        if (teleSpeaker > 0) {
+            teleSpeaker--;
+            teleSpeaker = (teleSpeaker < 10) ? "" + teleSpeaker : teleSpeaker;
+            teleSpeakerNumberStepperNumber.innerText = teleSpeaker;
         }
     });
 
