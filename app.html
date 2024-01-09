@@ -45,7 +45,12 @@
           <label class="radioLabel">4</label>
           <input type="radio" name="startPosition" value="4"/>
         </div>
-        <dialog></dialog>
+        <button class="startPositionLabel" onclick="showStartPositionMap()">Map</button>
+        <dialog id="startPositionDialog">
+                <button class="rotateStartPositionMap" onclick="rotateStartPositionMap()">&#8635;</button>
+                <button class="closeStartPositionMap" onclick="closeStartPositionMap()">X</button>
+            <img src="./img/startPositions.png" class="startPositionMap" id="startPositionMap">
+        </dialog>
       </div>
 
       <p class="preMatchTitle">Autonomous</p>
@@ -118,7 +123,7 @@
         
         <label for="cards">Parked</label>
         <input name="cards" id="cards" class="cards" type="checkbox">
-
+        </div> <!--no show end-->
         <label for="parked">Red/Yellow Cards</label>
         <input name="parked" id="parked" class="parked" type="checkbox">
 
@@ -167,7 +172,7 @@
       color: white;
       background-color: rgb(255, 208, 0);
       padding: 20px;
-      border-radius: 7px;
+      border-radius: 5px;
       margin: 1.5rem 0 1rem 0;
     }
 
@@ -175,7 +180,7 @@
       background-color: #242323;
       color: white;
       width: 400px;
-      border-radius: 7px;
+      border-radius: 5px;
       padding: 25px;
       transition: .1s;
       margin-bottom: 5rem;
@@ -232,7 +237,7 @@
       font-size: 2rem;
       background-color: red;
       padding: 20px;
-      border-radius: 7px;
+      border-radius: 5px;
       margin: 2rem 0;
     }
 
@@ -260,7 +265,7 @@
       background-color: white;
       margin: 0rem 1rem;
       padding: 3px 12px;
-      border-radius: 7px;
+      border-radius: 5px;
       font-size: 2.7rem;
       cursor: pointer;
 
@@ -271,7 +276,7 @@
       margin: 0rem 1rem;
       font-size: 2rem;
       font-family: sans-serif;
-      border-radius: 7px;
+      border-radius: 5px;
       padding: 10px;
     }
 
@@ -279,7 +284,7 @@
       background-color: white;
       margin: 0rem 1rem;
       padding: 0px 10px;
-      border-radius: 7px;
+      border-radius: 5px;
       font-size: 3rem;
       cursor: pointer;
     }
@@ -301,6 +306,7 @@
       padding: 10px;
       margin: 1rem;
       margin-top: 0.5rem;
+      justify-content: center;
     }
 
     .radioTitle {
@@ -325,6 +331,56 @@
       flex-direction: row;
       align-items: center;
       justify-content: center;
+    }
+
+    .startPositionLabel {
+        color: white;
+        background-color: #57bf32;
+        font-size: 1rem;
+        font-family: sans-serif;
+        border: none;
+        cursor: pointer;
+        width: 25%;
+        margin: auto;
+    }
+
+    .closeStartPositionMap {
+        color: white;
+        background-color: red;
+        font-size: 2rem;
+        font-family: sans-serif;
+        border: none;
+        cursor: pointer;
+        margin: auto;
+        width: 100px;
+        
+    }
+
+    .rotateStartPositionMap {
+        color: white;
+        background-color: rgb(255, 208, 0);
+        font-size: 2rem;
+        font-weight: bold;
+        font-family: sans-serif;
+        border: none;
+        cursor: pointer;
+        margin: auto;
+        width: 100px;
+    }
+
+    #startPositionDialog {
+        justify-content: center;
+        margin: auto;
+        background-color: #242323;
+        border: none;
+        border-radius: 5px;
+        width: 90vw;
+        padding: 1rem;
+    }
+
+    .startPositionMap {
+        display: flex;
+        width: 87vw;
     }
 
     .generate-btn {
@@ -1180,10 +1236,10 @@
             startPosition = "";
           }
 
-          // Creates a variable to hold all the data collected
           generateBtn.innerText = "Generating QR Code...";
           //The spacer automatically puts each input into seperate columns when exporting to Google Sheets
           let spacer = "	";
+          // Creates a variable to hold all the data collected
           let data = scouterNameField.value + spacer + matchNumberField.value + spacer + teamNumberField.value + spacer + noShow.checked + spacer + startPosition + spacer + preLoadScored.checked + spacer + leftStartZone.checked + spacer + autoAMP + spacer + autoSpeaker + spacer + teleAMP + spacer + teleSpeaker + spacer + onStage + spacer + trap + spacer + parked.checked + spacer + cards.checked + spacer + commentField.value;
 
           // fixes bug in QR Library where the code may not work right between these number of characters
@@ -1361,6 +1417,26 @@
             trapNumberStepperNumber.innerText = trap;
         }
     });
+
+    var startPositionDialog = document.getElementById("startPositionDialog");
+    var startPositionMap = document.getElementById("startPositionMap");
+    function showStartPositionMap() {
+        startPositionDialog.show();
+    }
+    function closeStartPositionMap() {
+        startPositionDialog.close();
+    }
+
+    var startPostionCounter = 0;
+    function rotateStartPositionMap() {
+        if (startPostionCounter == 0) {
+            startPositionMap.src = "./img/field.png";
+            startPostionCounter = 1;
+        } else {
+            startPositionMap.src = "./img/startPositions.png";
+            startPostionCounter = 0;
+        }
+    }
 
     function reset() {
         location.reload();
