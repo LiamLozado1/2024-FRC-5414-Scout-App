@@ -101,9 +101,26 @@
         </div>
 
         <p class="preMatchTitle">End Game</p>
+
+        <p class="numberStepperTitle">On Stage</p>
+        <div class="numberStepper" id="numberStepper">
+          <span class="onStagenumberStepperMinus" id="numberStepperMinus">&minus;</span>
+          <span class="onStagenumberStepperNumber" id="numberStepperNumber">0</span>
+          <span class="onStagenumberStepperPlus" id="numberStepperPlus">+</span>
+        </div>
+
+        <p class="numberStepperTitle">Trap</p>
+        <div class="numberStepper" id="numberStepper">
+          <span class="trapnumberStepperMinus" id="numberStepperMinus">&minus;</span>
+          <span class="trapnumberStepperNumber" id="numberStepperNumber">0</span>
+          <span class="trapnumberStepperPlus" id="numberStepperPlus">+</span>
+        </div>
         
-        <label for="exampleCheckbox">Parked</label>
-        <input name="exampleCheckbox" id="exampleCheckbox" class="exampleCheckbox" type="checkbox">
+        <label for="cards">Parked</label>
+        <input name="cards" id="cards" class="cards" type="checkbox">
+
+        <label for="parked">Red/Yellow Cards</label>
+        <input name="parked" id="parked" class="parked" type="checkbox">
 
         <label>Comments</label>
         <input type="text" class="commentField" placeholder="List any comments you may have about your robot!">
@@ -173,8 +190,8 @@
     }
 
     .qr-code {
-      padding: 5px 0;
-      margin: 10px 1.5rem 0rem 1.5rem;
+      padding: 5px 5px;
+      margin: 3rem 1rem 0rem 1rem;
       display: none;
       align-items: center;
       justify-content: center;
@@ -182,7 +199,7 @@
       pointer-events: none;
       transition: .5s;
       background-color: white;
-      border-radius: 25px;
+      border-radius: 5px;
     }
 
     .container.active {
@@ -1148,6 +1165,8 @@
     let startPosition = document.querySelectorAll('input[name="startPosition"]');
     var preLoadScored = document.querySelector(".preLoadScored");
     var leftStartZone = document.querySelector(".leftStartZone");
+    var parked = document.querySelector(".parked");
+    var cards = document.querySelector(".cards");
     var commentField = document.querySelector(".commentField");
 
     let qr_code_counter = 0;
@@ -1165,7 +1184,7 @@
           generateBtn.innerText = "Generating QR Code...";
           //The spacer automatically puts each input into seperate columns when exporting to Google Sheets
           let spacer = "	";
-          let data = scouterNameField.value + spacer + matchNumberField.value + spacer + teamNumberField.value + spacer + noShow.checked + spacer + startPosition + spacer + preLoadScored.checked + spacer + leftStartZone.checked + spacer + autoAMP + spacer + autoSpeaker + spacer + teleAMP + spacer + teleSpeaker + spacer + numberOfContext + spacer + exampleCheckbox.checked + spacer + commentField.value;
+          let data = scouterNameField.value + spacer + matchNumberField.value + spacer + teamNumberField.value + spacer + noShow.checked + spacer + startPosition + spacer + preLoadScored.checked + spacer + leftStartZone.checked + spacer + autoAMP + spacer + autoSpeaker + spacer + teleAMP + spacer + teleSpeaker + spacer + onStage + spacer + trap + spacer + parked.checked + spacer + cards.checked + spacer + commentField.value;
 
           // fixes bug in QR Library where the code may not work right between these number of characters
           if (data.length > 192 && data.length < 220) {
@@ -1298,6 +1317,48 @@
             teleSpeaker--;
             teleSpeaker = (teleSpeaker < 10) ? "" + teleSpeaker : teleSpeaker;
             teleSpeakerNumberStepperNumber.innerText = teleSpeaker;
+        }
+    });
+
+    //On Stage Number Counter
+    const onStageNumberStepperPlus = document.querySelector(".onStagenumberStepperPlus"),
+    onStageNumberStepperMinus = document.querySelector(".onStagenumberStepperMinus"),
+    onStageNumberStepperNumber = document.querySelector(".onStagenumberStepperNumber");
+    let onStage = 0;
+    onStageNumberStepperPlus.addEventListener("click", () => {
+        onStage++;
+        onStage = (onStage < 10) ? "" + onStage : onStage;
+        onStageNumberStepperNumber.innerText = onStage;
+    });
+
+    onStageNumberStepperMinus.addEventListener("click", () => {
+        if (onStage > 0) {
+            onStage--;
+            onStage = (onStage < 10) ? "" + onStage : onStage;
+            onStageNumberStepperNumber.innerText = onStage;
+        }
+    });
+
+    //Trap Number Counter
+    const trapNumberStepperPlus = document.querySelector(".trapnumberStepperPlus"),
+    trapNumberStepperMinus = document.querySelector(".trapnumberStepperMinus"),
+    trapNumberStepperNumber = document.querySelector(".trapnumberStepperNumber");
+    let trap = 0;
+    trapNumberStepperPlus.addEventListener("click", () => {
+        trap++;
+        trap = (trap < 10) ? "" + trap : trap;
+        trapNumberStepperNumber.innerText = trap;
+        if (trap >= 3) {
+            trap = 3;
+            trapNumberStepperNumber.innerText = "" + trap;
+        }
+    });
+
+    trapNumberStepperMinus.addEventListener("click", () => {
+        if (trap > 0) {
+            trap--;
+            trap = (trap < 10) ? "" + trap : trap;
+            trapNumberStepperNumber.innerText = trap;
         }
     });
 
