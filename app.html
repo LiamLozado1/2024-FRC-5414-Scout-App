@@ -22,8 +22,11 @@
       <label>Scouter Name</label>
       <input type="text" class="scouterNameField" placeholder="Scouter Name">
 
+      <label>Match Number</label>
+      <input type="number" inputmode="numeric" class="matchNumberField" placeholder="Match Number" >
+
       <label>Team Number</label>
-      <input type="number" class="teamNumberField" placeholder="Team Number">
+      <input type="number" inputmode="numeric" class="teamNumberField" placeholder="Team Number">
 
       <!--No Show hides certain elements if team does not show up to a match-->
       <label for="noShow">No Show</label>
@@ -42,6 +45,7 @@
           <label class="radioLabel">4</label>
           <input type="radio" name="startPosition" value="4"/>
         </div>
+        <dialog></dialog>
       </div>
 
       <p class="preMatchTitle">Autonomous</p>
@@ -82,20 +86,27 @@
           <span class="teleSpeakernumberStepperPlus" id="numberStepperPlus">+</span>
         </div>
 
-        <p class="preMatchTitle">End Game</p>
-     
-        <!--Example Number Stepper-->
-        <p class="numberStepperTitle">Example Number Stepper</p>
-        <div class="numberStepper" id="numberStepper">
-          <span class="numberStepperMinus" id="numberStepperMinus">&minus;</span>
-          <span class="numberStepperNumber" id="numberStepperNumber">0</span>
-          <span class="numberStepperPlus" id="numberStepperPlus">+</span>
+        <div class="multi-select">
+            <p class="multi-selectTitle">Shooting Positions</p>
+            <div class="multi-selectInput">
+                <label for="exampleCheckbox">1</label>
+                <input name="exampleCheckbox" id="exampleCheckbox" class="exampleCheckbox" type="checkbox">
+                <label for="exampleCheckbox">2</label>
+                <input name="exampleCheckbox" id="exampleCheckbox" class="exampleCheckbox" type="checkbox">
+                <label for="exampleCheckbox">3</label>
+                <input name="exampleCheckbox" id="exampleCheckbox" class="exampleCheckbox" type="checkbox">
+                <label for="exampleCheckbox">4</label>
+                <input name="exampleCheckbox" id="exampleCheckbox" class="exampleCheckbox" type="checkbox">
+            </div>
         </div>
-      </div>
 
-        <!--Example CheckBox-->
-        <label for="exampleCheckbox">Example Checkbox</label>
+        <p class="preMatchTitle">End Game</p>
+        
+        <label for="exampleCheckbox">Parked</label>
         <input name="exampleCheckbox" id="exampleCheckbox" class="exampleCheckbox" type="checkbox">
+
+        <label>Comments</label>
+        <input type="text" class="commentField" placeholder="List any comments you may have about your robot!">
       
       <button class="generate-btn" id="generate-btn">Generate</button>
       <div class="qr-code">
@@ -162,8 +173,8 @@
     }
 
     .qr-code {
-      padding: 25px 0;
-      margin-top: 10px;
+      padding: 5px 0;
+      margin: 10px 1.5rem 0rem 1.5rem;
       display: none;
       align-items: center;
       justify-content: center;
@@ -171,7 +182,7 @@
       pointer-events: none;
       transition: .5s;
       background-color: white;
-      padding: 10px;
+      border-radius: 5px;
     }
 
     .container.active {
@@ -256,6 +267,15 @@
       cursor: pointer;
     }
 
+    .multi-select {
+        background: rgba(17, 17, 17, 1);
+    }
+
+    .multi-selectTitle {
+        font-size: 1.2rem;
+        margin: 1rem 0;
+    }
+
     .radio {
       display: flex;
       flex-direction: column;
@@ -291,7 +311,6 @@
     }
 
     .generate-btn {
-    
       border: none;
       background-color: #57bf32;
       font-size: 2rem;
@@ -1123,12 +1142,13 @@
     var container = document.querySelector(".container");
     var generateBtn = document.querySelector(".generate-btn");
     var scouterNameField = document.querySelector(".scouterNameField");
+    var matchNumberField = document.querySelector(".matchNumberField");
     var teamNumberField = document.querySelector(".teamNumberField");
     var noShow = document.querySelector(".noShow");
     let startPosition = document.querySelectorAll('input[name="startPosition"]');
     var preLoadScored = document.querySelector(".preLoadScored");
     var leftStartZone = document.querySelector(".leftStartZone");
-    var exampleCheckbox = document.querySelector(".exampleCheckbox");
+    var commentField = document.querySelector(".commentField");
 
     let qr_code_counter = 0;
     generateBtn.onclick = function() {
@@ -1145,7 +1165,7 @@
           generateBtn.innerText = "Generating QR Code...";
           //The spacer automatically puts each input into seperate columns when exporting to Google Sheets
           let spacer = "	";
-          let data = scouterNameField.value + spacer + teamNumberField.value + spacer + noShow.checked + spacer + startPosition + spacer + preLoadScored.checked + spacer + leftStartZone.checked + spacer + autoAMP + spacer + autoSpeaker + spacer + teleAMP + spacer + teleSpeaker + spacer + numberOfContext + spacer + exampleCheckbox.checked;
+          let data = scouterNameField.value + spacer + matchNumberField.value + spacer + teamNumberField.value + spacer + noShow.checked + spacer + startPosition + spacer + preLoadScored.checked + spacer + leftStartZone.checked + spacer + autoAMP + spacer + autoSpeaker + spacer + teleAMP + spacer + teleSpeaker + spacer + numberOfContext + spacer + exampleCheckbox.checked + spacer + commentField.value;
 
           // fixes bug in QR Library where the code may not work right between these number of characters
           if (data.length > 192 && data.length < 220) {
@@ -1224,7 +1244,6 @@
         }
     });
 
-    
     //Auto Speaker Number Counter
     const autoSpeakerNumberStepperPlus = document.querySelector(".autoSpeakernumberStepperPlus"),
         autoSpeakerNumberStepperMinus = document.querySelector(".autoSpeakernumberStepperMinus"),
@@ -1263,7 +1282,6 @@
         }
     });
 
-    
     //Tele Speaker Number Counter
     const teleSpeakerNumberStepperPlus = document.querySelector(".teleSpeakernumberStepperPlus"),
         teleSpeakerNumberStepperMinus = document.querySelector(".teleSpeakernumberStepperMinus"),
@@ -1280,29 +1298,6 @@
             teleSpeaker--;
             teleSpeaker = (teleSpeaker < 10) ? "" + teleSpeaker : teleSpeaker;
             teleSpeakerNumberStepperNumber.innerText = teleSpeaker;
-        }
-    });
-
-    // Example Number Stepper
-    const exampleNumberStepperPlus = document.querySelector(".numberStepperPlus"),
-        exampleNumberStepperMinus = document.querySelector(".numberStepperMinus"),
-        exampleNumberStepperNumber = document.querySelector(".numberStepperNumber");
-    let numberOfContext = 0;
-    exampleNumberStepperPlus.addEventListener("click", () => {
-        numberOfContext++;
-        numberOfContext = (numberOfContext < 10) ? "" + numberOfContext : numberOfContext;
-        exampleNumberStepperNumber.innerText = numberOfContext;
-        if (numberOfContext >= 3) {
-            numberOfContext = 3;
-            exampleNumberStepperNumber.innerText = "" + numberOfContext;
-        }
-    });
-
-    exampleNumberStepperMinus.addEventListener("click", () => {
-        if (numberOfContext > 0) {
-            numberOfContext--;
-            numberOfContext = (numberOfContext < 10) ? "" + numberOfContext : numberOfContext;
-            exampleNumberStepperNumber.innerText = numberOfContext;
         }
     });
 
