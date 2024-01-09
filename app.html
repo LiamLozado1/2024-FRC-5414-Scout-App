@@ -11,6 +11,13 @@
 <body>
   <p id="fullscreenBTN">&#x26F6;</p>
 
+  <p id="switchBTN" onclick="openSwitchDialog()">&equiv;</p>
+  <dialog class="switchDialog" id="switchDialog">
+    <button onclick="closeSwitchDialog()" class="switchDialogMatch">Match</button>
+    <button onclick="" class="switchDialogPit">Pit</button>
+    <button onclick="" class="switchDialogSuper">Super</button>
+  </dialog>
+
   <p class="mainTitle">Scout App</p>
   <img src="./img/crescendo.png" height="200px" style="margin-bottom: 1rem;">
   
@@ -94,14 +101,14 @@
         <div class="multi-select">
             <p class="multi-selectTitle">Shooting Positions</p>
             <div class="multi-selectInput">
-                <label for="exampleCheckbox">1</label>
-                <input name="exampleCheckbox" id="exampleCheckbox" class="exampleCheckbox" type="checkbox">
-                <label for="exampleCheckbox">2</label>
-                <input name="exampleCheckbox" id="exampleCheckbox" class="exampleCheckbox" type="checkbox">
-                <label for="exampleCheckbox">3</label>
-                <input name="exampleCheckbox" id="exampleCheckbox" class="exampleCheckbox" type="checkbox">
-                <label for="exampleCheckbox">4</label>
-                <input name="exampleCheckbox" id="exampleCheckbox" class="exampleCheckbox" type="checkbox">
+                <label for="shootingPositions">1</label>
+                <input name="shootingPositions" id="exampleCheckbox" class="exampleCheckbox" type="checkbox" value="1">
+                <label for="shootingPositions">2</label>
+                <input name="shootingPositions" id="exampleCheckbox" class="exampleCheckbox" type="checkbox" value="2">
+                <label for="shootingPositions">3</label>
+                <input name="shootingPositions" id="exampleCheckbox" class="exampleCheckbox" type="checkbox" value="3">
+                <label for="shootingPositions">4</label>
+                <input name="shootingPositions" id="exampleCheckbox" class="exampleCheckbox" type="checkbox" value="4">
             </div>
         </div>
 
@@ -290,12 +297,24 @@
     }
 
     .multi-select {
+        display: flex;
+        flex-direction: column;
         background: rgba(17, 17, 17, 1);
+        margin: 1rem 0rem 0rem 0rem;
     }
 
     .multi-selectTitle {
         font-size: 1.2rem;
         margin: 1rem 0;
+    }
+
+    .multi-selectInput {
+        display: flex;
+        flex-direction: row;
+    }
+
+    .multi-selectInput label {
+        margin-bottom: 0.8rem;
     }
 
     .radio {
@@ -414,6 +433,62 @@
       border-radius: 5px;
       padding: 0px 10px;
       cursor: pointer;
+    }
+
+    #switchBTN {
+      position: fixed;
+      top: 2%;
+      right: 1%;
+      background-color: #57bf32;
+      color: white;
+      font-size: 3rem;
+      font-family: sans-serif;
+      align-items: center;
+      justify-content: center;
+      border: none;
+      border-radius: 5px;
+      padding: 0px 10px;
+      cursor: pointer;
+    }
+
+    .switchDialog {
+        width: 50vw;
+        margin: auto;
+        background-color: #3d3c3c;
+        padding: 25px;
+        border: #242323 1px solid;
+        border-radius: 5px;
+    }
+
+    .switchDialogMatch {
+        background-color: #57bf32;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-family: sans-serif;
+        font-size: 1.5rem;
+    }
+
+    .switchDialogPit {
+        background-color: deepskyblue;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        margin: 1rem 0rem;
+        font-family: sans-serif;
+        font-size: 1.5rem;
+    }
+
+    .switchDialogSuper {
+        background-color: gold;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-family: sans-serif;
+        font-size: 1.5rem;
     }
   </style>
 
@@ -1221,6 +1296,7 @@
     let startPosition = document.querySelectorAll('input[name="startPosition"]');
     var preLoadScored = document.querySelector(".preLoadScored");
     var leftStartZone = document.querySelector(".leftStartZone");
+    let shootingPositions = document.querySelectorAll('input[name="shootingPositions"]');
     var parked = document.querySelector(".parked");
     var cards = document.querySelector(".cards");
     var commentField = document.querySelector(".commentField");
@@ -1240,7 +1316,7 @@
           //The spacer automatically puts each input into seperate columns when exporting to Google Sheets
           let spacer = "	";
           // Creates a variable to hold all the data collected
-          let data = scouterNameField.value + spacer + matchNumberField.value + spacer + teamNumberField.value + spacer + noShow.checked + spacer + startPosition + spacer + preLoadScored.checked + spacer + leftStartZone.checked + spacer + autoAMP + spacer + autoSpeaker + spacer + teleAMP + spacer + teleSpeaker + spacer + onStage + spacer + trap + spacer + parked.checked + spacer + cards.checked + spacer + commentField.value;
+          let data = scouterNameField.value + spacer + matchNumberField.value + spacer + teamNumberField.value + spacer + noShow.checked + spacer + startPosition + spacer + preLoadScored.checked + spacer + leftStartZone.checked + spacer + autoAMP + spacer + autoSpeaker + spacer + teleAMP + spacer + teleSpeaker + spacer + shootingPositions + spacer + onStage + spacer + trap + spacer + parked.checked + spacer + cards.checked + spacer + commentField.value;
 
           // fixes bug in QR Library where the code may not work right between these number of characters
           if (data.length > 192 && data.length < 220) {
@@ -1280,13 +1356,19 @@
     }
   }
   
-    // Example Radio
+
     let findSelectedstartPosition = () => {
       startPosition = document.querySelector("input[name='startPosition']:checked").value;
     }
-
     startPosition.forEach(startPosition => {
       startPosition.addEventListener("change", findSelectedstartPosition);
+    });
+
+    let findSelectedshootingPositions = () => {
+        shootingPositions = document.querySelector("input[name='shootingPositions']:checked").value;
+    }
+    shootingPositions.forEach(shootingPositions => {
+        shootingPositions.addEventListener("change", findSelectedshootingPositions);
     });
 
     //No Show Toggle
@@ -1453,6 +1535,16 @@
             document.exitFullscreen();
         }
     });
+
+    var switchDialog = document.getElementById("switchDialog");
+    function openSwitchDialog() {
+        switchDialog.show();
+    }
+    function closeSwitchDialog() {
+        location.reload();
+        return false;
+    }
+
 </script>
 </body>
 
