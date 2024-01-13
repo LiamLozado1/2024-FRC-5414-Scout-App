@@ -155,7 +155,7 @@
   </div>
 </div>
 
-  <div class="container" id="pitScout">
+  <div class="containerPit" id="pitScout">
     <div class="input-form">
         <p class="preMatchTitle">Pit Scout</p>
 
@@ -163,23 +163,23 @@
         <input type="text" class="pitScouterName" placeholder="Scouter name">
 
         <label>Team Number</label>
-        <input type="text" class="pitTeamNumber" placeholder="Team number">
+        <input type="number" class="pitTeamNumber" placeholder="Team number">
 
-        <label>Base Perimeter</label>
-        <input type="text" class="pitBasePerimeter" placeholder="Robot base perimeter">
+        <label>Base Perimeter (inches)</label>
+        <input type="number" class="pitBasePerimeter" placeholder="Robot base perimeter">
 
-        <label>Vertical Height</label>
-        <input type="text" class="pitRobotHeight" placeholder="What is their vertical height?">
+        <label>Vertical Height (inches)</label>
+        <input type="number" class="pitRobotHeight" placeholder="What is their vertical height?">
 
         <div class="multi-select">
             <p class="multi-selectTitle">Score Capabilities</p>
             <div class="multi-selectInput">
-                <label for="shootingPositions">AMP</label>
-                <input name="shootingPositions" id="exampleCheckbox" class="exampleCheckbox" type="checkbox" value="AMP">
-                <label for="shootingPositions">Speaker</label>
-                <input name="shootingPositions" id="exampleCheckbox" class="exampleCheckbox" type="checkbox" value="Speaker">
-                <label for="shootingPositions">Trap</label>
-                <input name="shootingPositions" id="exampleCheckbox" class="exampleCheckbox" type="checkbox" value="Trap">
+                <label for="scoreCapabilitiesAMP">AMP</label>
+                <input name="scoreCapabilitiesAMP" id="scoreCapabilitiesAMP" class="scoreCapabilitiesAMP" type="checkbox" value="AMP">
+                <label for="scoreCapabilitiesSpeaker">Speaker</label>
+                <input name="scoreCapabilitiesSpeaker" id="scoreCapabilitiesSpeaker" class="scoreCapabilitiesSpeaker" type="checkbox" value="Speaker">
+                <label for="scoreCapabilitiesTrap">Trap</label>
+                <input name="scoreCapabilitiesTrap" id="scoreCapabilitiesTrap" class="scoreCapabilitiesTrap" type="checkbox" value="Trap">
             </div>
         </div>
 
@@ -195,7 +195,7 @@
         <label>Autonomous Strategy</label>
         <input type="text" class="pitAutoStrat" placeholder="What is their autonomous strategy?">
 
-        <label>Climb Time</label>
+        <label>Climb Time (seconds)</label>
         <input type="number" inputmode="numeric" class="pitRobotClimbTime" placeholder="How fast do they climb?">
 
         <label>Programming Language</label>
@@ -214,7 +214,7 @@
         <input type="text" class="pitNotes" placeholder="Any extra information?">
 
         <button class="generate-btnPit" id="generate-btnPit">Generate</button>
-        <div class="qr-code">
+        <div class="qr-codePit">
         <div id="qrcodePit"></div>
         </div>
         <button id="resetBTN" onclick="resetPit()">Reset</button>
@@ -308,6 +308,48 @@
     }
 
     .container.active .qr-code {
+      opacity: 1;
+      display: flex;
+      flex-direction: column;
+      pointer-events: auto;
+    }
+
+    .qr-codePit {
+      padding: 5px 5px;
+      margin: 3rem 1rem 0rem 1rem;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: .5s;
+      background-color: white;
+      border-radius: 5px;
+    }
+
+    .containerPit {
+      background-color: #242323;
+      color: white;
+      width: 400px;
+      border-radius: 5px;
+      padding: 25px;
+      transition: .1s;
+      margin-bottom: 5rem;
+    }
+
+    .containerPit p,
+    label,
+    input {
+      font-family: sans-serif;
+      display: flex;
+      justify-content: center;
+    }
+
+    .containerPit.active {
+      margin-bottom: 5rem;
+    }
+
+    .containerPit.active .qr-codePit {
       opacity: 1;
       display: flex;
       flex-direction: column;
@@ -1410,7 +1452,7 @@
     //Create variables for each input
     var container = document.querySelector(".container");
     var generateBtn = document.querySelector(".generate-btn");
-    var scouterNameField = document.querySelector(".scouterNameField");
+    var scouterName = document.querySelector(".scouterNameField");
     var matchNumberField = document.querySelector(".matchNumberField");
     var teamNumberField = document.querySelector(".teamNumberField");
     var noShow = document.querySelector(".noShow");
@@ -1432,7 +1474,7 @@
     let qr_code_counter = 0;
     generateBtn.onclick = function() {
       if (qr_code_counter == 0) {
-        if (scouterNameField.value.length > 0) {
+        if (scouterName.value.length > 0) {
           qr_code_counter++;
 
           // Checks for unanswered radio questions and replaces it with a blank string for easier reading later on
@@ -1447,7 +1489,7 @@
           //The spacer automatically puts each input into seperate columns when exporting to Google Sheets
           let spacer = "	";
           // Creates a variable to hold all the data collected
-          let data = scouterNameField.value + spacer + matchNumberField.value + spacer + teamNumberField.value + spacer + noShow.checked + spacer + startPosition + spacer + preLoadScored.checked + spacer + leftStartZone.checked + spacer + autoAMP + spacer + autoSpeaker + spacer + teleAMP + spacer + teleSpeaker + spacer + shootPosition1.checked + spacer + shootPosition2.checked + spacer + shootPosition3.checked + spacer + shootPosition4.checked + spacer + trapSide1.checked + spacer + trapSide2.checked + spacer + trapSide3.checked + spacer + onStage + spacer + parked.checked + spacer + robotDeath.checked + spacer + commentField.value + "\n";
+          let data = scouterName.value + spacer + matchNumberField.value + spacer + teamNumberField.value + spacer + noShow.checked + spacer + startPosition + spacer + preLoadScored.checked + spacer + leftStartZone.checked + spacer + autoAMP + spacer + autoSpeaker + spacer + teleAMP + spacer + teleSpeaker + spacer + shootPosition1.checked + spacer + shootPosition2.checked + spacer + shootPosition3.checked + spacer + shootPosition4.checked + spacer + trapSide1.checked + spacer + trapSide2.checked + spacer + trapSide3.checked + spacer + onStage + spacer + parked.checked + spacer + robotDeath.checked + spacer + commentField.value + "\n";
 
           // fixes bug in QR Library where the code may not work right between these number of characters
           if (data.length > 192 && data.length < 220) {
@@ -1659,26 +1701,37 @@
 <script>
 
     var pitScouterName = document.querySelector(".pitScouterName");
+    var pitTeamNumber = document.querySelector(".pitTeamNumber");
+    var pitBasePerimeter = document.querySelector(".pitBasePerimeter");
+    var pitRobotHeight = document.querySelector(".pitRobotHeight");
+    var scoreCapabilitiesAMP = document.querySelector(".scoreCapabilitiesAMP");
+    var scoreCapabilitiesSpeaker = document.querySelector(".scoreCapabilitiesSpeaker");
+    var scoreCapabilitiesTrap = document.querySelector(".scoreCapabilitiesTrap");
+    var pitDriveType = document.querySelector(".pitDriveType");
+    var pitDriverExperience = document.querySelector(".pitDriverExperience");
+    var pitShootArea = document.querySelector(".pitShootArea");var pitAutoStrat = document.querySelector(".pitAutoStrat");
+    var pitRobotClimbTime = document.querySelector(".pitRobotClimbTime");
+    var pitRobotLang = document.querySelector(".pitRobotLang");
+    var pitSpareNumber = document.querySelector(".pitSpareNumber");
+    var pitUniqueFeature = document.querySelector(".pitUniqueFeature");
+    var pitRobotQuality = document.querySelector(".pitRobotQuality");
+    var pitNotes = document.querySelector(".pitNotes");
 
-
-    var container = document.querySelector(".container");
+    var containerPit = document.querySelector(".containerPit");
     var generateBtnPit = document.querySelector(".generate-btnPit");
-    qr_code_counter = 0;
+    let qr_code_counter_pit = 0;
     generateBtnPit.onclick = function() {
-        console.log(pitScouterName.value);
-      if (qr_code_counter == 0) {
+      if (qr_code_counter_pit == 0) {
         if (pitScouterName.value.length > 0) {
             
-          qr_code_counter++;
+          qr_code_counter_pit++;
 
           generateBtnPit.innerText = "Generating QR Code...";
 
-          // Checks for unanswered radio questions and replaces it with a blank string for easier reading later on
-
-          //The spacer automatically puts each input into seperate columns when exporting to Google Sheets
+          //The spacer automatically puts each input into seperate columns when scanning into Google Sheets
           let spacer = "	";
           // Creates a variable to hold all the data collected
-          let data =  + "\n";
+          let data = pitScouterName.value + spacer + pitTeamNumber.value + spacer + pitBasePerimeter.value + spacer + pitRobotHeight.value + spacer + scoreCapabilitiesAMP.checked + "," + scoreCapabilitiesSpeaker.checked + "," + scoreCapabilitiesTrap.checked + spacer + pitDriveType.value + spacer + pitShootArea.value + spacer + pitRobotClimbTime.value + spacer + pitRobotLang.value + spacer + pitAutoStrat.value + spacer + pitUniqueFeature.value + spacer + pitRobotQuality.value + spacer + pitDriverExperience.value + spacer + pitSpareNumber.value +spacer + pitNotes.value + spacer + "\n";
 
           // fixes bug in QR Library where the code may not work right between these number of characters
           if (data.length > 192 && data.length < 220) {
@@ -1696,14 +1749,14 @@
             });;
        
           //Outputs the data into the console for easy viewing
-          console.log(data);
+            console.log(data);
 
           //reveals the QR-Code
-          container.classList.add("active");
+          containerPit.classList.add("active");
           generateBtnPit.innerText = "Generated";
           
         } else {
-        //   generateBtnPit.innerText = "Missing Scout Name!";
+          generateBtnPit.innerText = "Missing Scout Name!";
           generateBtnPit.innerText = pitScouterName;
           setInterval(generateBtnReset, 2000);
           function generateBtnReset() {
