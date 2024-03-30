@@ -17,7 +17,7 @@
     <button onclick="switchDialogMatch()" class="switchDialogMatch">Match</button>
     <button onclick="switchDialogPit()" class="switchDialogPit">Pit</button>
     <button onclick="switchDialogSuper()" class="switchDialogSuper">Super</button>
-    <p class="version">Version: 1.7.0 as of 3/27/24</p>
+    <p class="version">Version: 1.8.0 as of 3/30/24</p>
   </dialog>
 
   <p class="mainTitle">Scout App</p>
@@ -30,13 +30,14 @@
 
       <p class="sectionTitle">Pre-Match</p>
 
-      <label>Scouter Name<p class="requiredField">*</p></label>
-      <input type="text" class="scouterNameField" placeholder="Scouter Name">
-
-      <form class="input-form-match" id="input-form-match">
+        <div class="scouterNameDIV">
+            <label for="ScoutName">Scouter Name<p class="requiredField">*</p></label name="ScoutName" id="ScoutName">
+        </div>
 
         <label>Match Number<p class="requiredField">*</p></label>
         <input type="number" inputmode="numeric" class="matchNumberField" placeholder="Match Number" name="matchNumberTest">
+
+        <form class="input-form-match" id="input-form-match">
 
         <label>Team Number<p class="requiredField">*</p></label>
         <input type="number" inputmode="numeric" class="teamNumberField" placeholder="Team Number">
@@ -72,9 +73,6 @@
         </div>
 
         <p class="sectionTitle">Autonomous</p>
-
-        <label for="preLoad">Pre-Load Scored</label>
-        <input name="preLoad" class="preLoadScored" type="checkbox">
 
         <label for="leftStartZone">Left Starting Zone</label>
         <input name="leftStartZone" class="leftStartZone" type="checkbox">
@@ -218,33 +216,35 @@
     
         <p class="sectionTitle">Pit Scout</p>
 
+        <div class="pitScouterNameDIV">
         <label>Scouter Name<p class="requiredField">*</p></label>
-        <input type="text" class="pitScouterName" placeholder="Scouter name">
+        <!-- <input type="text" class="pitScouterName" placeholder="Scouter name"> -->
+        </div>
 
         <form class="inputFormPit">
 
             <label>Team Number<p class="requiredField">*</p></label>
-            <input type="number" class="pitTeamNumber" placeholder="Team number">
+            <input type="number" inputmode="numeric" class="pitTeamNumber" placeholder="Team number">
 
             <div class="appComment"> 
                 <p>Ask the team politely if you can measure the team's base with bumpers using a measuring tape.</p>
             </div>  
 
             <label>Base Width (inches)</label>
-            <input type="number" class="pitBaseWidth" placeholder="Robot base width">
+            <input type="number" inputmode="numeric" class="pitBaseWidth" placeholder="Robot base width">
 
             <div class="appComment"> 
                 <p>Ask the team politely if you can measure the team's base with bumpers using a measuring tape.</p>
             </div>  
 
             <label>Base Length (inches)</label>
-            <input type="number" class="pitBaseLength" placeholder="Robot base length">
+            <input type="number" inputmode="numeric" class="pitBaseLength" placeholder="Robot base length">
 
             <label>Vertical Height (inches)</label>
-            <input type="number" class="pitRobotHeight" placeholder="What is their vertical height?">
+            <input type="number" inputmode="numeric" class="pitRobotHeight" placeholder="What is their vertical height?">
 
             <label>Robot Weight (lbs)</label>
-            <input type="number" class="pitRobotWeight" placeholder="What is their robot weight with bumpers?">
+            <input type="number" inputmode="numeric" class="pitRobotWeight" placeholder="What is their robot weight with bumpers?">
 
             <div class="multi-select">
                 <p class="multi-selectTitle">Score Capabilities</p>
@@ -285,20 +285,10 @@
             <label>Build Quality (Do not ask them this!!)</label>
             <input type="text" class="pitRobotQuality" placeholder="How is the wiring? What is the robot made of?">
 
-            <div class="multi-select">
-                <p class="multi-selectTitle">Does The Team Need Help?</p>
-                <div class="multi-selectInput">
-                    <label for="teamHelpRobot">Robot</label>
-                    <input name="teamHelpRobot" id="teamHelpRobot" class="teamHelpRobot" type="checkbox" value="Robot">
-                    <label for="teamHelpMaterials">Materials</label>
-                    <input name="teamHelpMaterials" id="teamHelpMaterials" class="teamHelpMaterials" type="checkbox" value="Materials">
-                    <label for="teamHelpTools">Tools</label>
-                    <input name="teamHelpTools" id="teamHelpTools" class="teamHelpTools" type="checkbox" value="Tools">
-                </div>
-            </div>
-
-            <label>Expand on Team Help</label>
-            <input type="text" class="teamHelpExpand" placeholder="What does the team need help on?">
+            <div class="appComment"> 
+                <p>Ask the team politely if they ever need help that they can come to our pit and ask for stuff. Only check if the team acknowledges.</p>
+                <input type="checkbox">
+            </div>  
 
             <label>Comments</label>
             <input type="text" class="pitNotes" placeholder="Any extra information?">
@@ -318,14 +308,16 @@
   <!--Super Scout Section-->
 
   <div class="containerSuper" id="superScout">
-    <form class="inputFormSuper">
-        <p class="sectionTitle">Super Scout</p>
 
-        <label>Team Number<p class="requiredField">*</p></label>
+    <p class="sectionTitle">Super Scout</p>
+
+    <label>Team Number<p class="requiredField">*</p></label>
         <input type="number" class="superTeamNumber" placeholder="Team Number">
 
         <label>Match Number<p class="requiredField">*</p></label>
         <input type="number" inputmode="numeric" class="superMatchNumberField" placeholder="Match Number" name="matchNumberTest">
+
+        <form class="inputFormSuper">
 
         <label>Autonomous Cycle Route</label>
         <input type="text" class="superAutoCycle" placeholder="Where do they intake, where do they score? Auto Interference">
@@ -562,6 +554,13 @@
       height: 50px;
       outline: none;
       border-radius: 5px;
+    }
+
+    select {
+        width: 100%;
+        height: 50px;
+        margin-bottom: 1rem;
+        border-radius: 5px;
     }
 
     .numberStepperTitle {
@@ -995,6 +994,7 @@
         width: 100vw;
         height: 1000vh;
         background: none;
+        outline: none;
         z-index: 0;
     }
 
@@ -1896,9 +1896,76 @@
 
   <!-- App Function -->
   <script defer>
-    
+    let teamList = [
+        "5414",
+        "118",
+        "3847"
+    ];
+
     //Create variables for each input
     var container = document.querySelector(".container");
+    var scouterNameDIV = document.querySelector(".scouterNameDIV");
+    //Create array of options to be added
+    var memberList = [
+        "Alexander",
+        "Andy",
+        "Arun",
+        "Blake",
+        "Bowen",
+        "Bradley",
+        "Bryan",
+        "Cameron L",
+        "Cameron O",
+        "Cate",
+        "Chenyu",
+        "Corvus",
+        "Cypher",
+        "Emmeline",
+        "Ethan",
+        "Gabriel",
+        "Grace",
+        "Grae",
+        "Hantao",
+        "Hitesh",
+        "Ian",
+        "James",
+        "Jasper",
+        "Jennifer",
+        "Johnny",
+        "JP",
+        "Junxi",
+        "Katia",
+        "Liam",
+        "Luke",
+        "Maya",
+        "Mia",
+        "Miles",
+        "Misha",
+        "Myra",
+        "Natalie",
+        "Nazeerul",
+        "Noah",
+        "Nuhan",
+        "Retvin",
+        "Roy",
+        "Sean",
+        "Sergio",
+        "Shaotan",
+        "Sofia",
+        "Zion"
+    ];
+    //Create and append select list
+    var memberListInput = document.createElement("select");
+    memberListInput.setAttribute("class", "scouterNameField");
+    scouterNameDIV.appendChild(memberListInput);
+
+    //Create and append the options
+    for (var i = 0; i < memberList.length; i++) {
+        var option = document.createElement("option");
+        option.setAttribute("value", memberList[i]);
+        option.text = memberList[i];
+        memberListInput.appendChild(option);
+    }
     var generateBtn = document.querySelector(".generate-btn");
     //defines the qrcode
     var qrcode = new QRCode(document.getElementById("qrcode"), {
@@ -1929,13 +1996,14 @@
     var onStage = document.querySelectorAll('input[name="onStage"]')
     var robotDeath = document.querySelector(".robotDeath");
     var commentField = document.querySelector(".commentField");
+    var timeSubmitted = new Date();
 
     let robotImage = document.querySelector(".robotImage");
 
     let qr_code_counter = 0;
     generateBtn.onclick = function() {
       if (qr_code_counter == 0) {
-        if (scouterName.value.length > 0 && matchNumberField.value.length > 0 && teamNumberField.value.length > 0) {
+        if (scouterName.value.length > 0 && matchNumberField.value.length > 0 && teamNumberField.value.length > 0 && teamList.includes(teamNumberField.value)) {
           qr_code_counter++;
 
           // Checks for unanswered radio questions and replaces it with a blank string for easier reading later on
@@ -1955,7 +2023,7 @@
           //The spacer automatically puts each input into seperate columns when exporting to Google Sheets
           let spacer = "	";
           // Creates a variable to hold all the data collected
-          let data = scouterName.value + spacer + matchNumberField.value + spacer + teamNumberField.value + spacer + noShow.checked + spacer + startPosition + spacer + preLoadScored.checked + spacer + leftStartZone.checked + spacer + autoAMP + spacer + autoAMPMissed + spacer + autoSpeaker + spacer + autoSpeakerMissed + spacer + teleAMP + spacer + teleAMPMissed + spacer + teleSpeaker + spacer + teleSpeakerMissed + spacer + pass + spacer + shootPosition1.checked + spacer + shootPosition2.checked + spacer + shootPosition3.checked + spacer + shootPosition4.checked + spacer + trap + spacer + ((stopWatchValue-1)/10) + spacer + onStage + spacer + robotDeath.checked + spacer + commentField.value + "\n";
+          let data = scouterName.value + spacer + matchNumberField.value + spacer + teamNumberField.value + spacer + noShow.checked + spacer + startPosition + spacer + leftStartZone.checked + spacer + autoAMP + spacer + autoAMPMissed + spacer + autoSpeaker + spacer + autoSpeakerMissed + spacer + teleAMP + spacer + teleAMPMissed + spacer + teleSpeaker + spacer + teleSpeakerMissed + spacer + pass + spacer + shootPosition1.checked + spacer + shootPosition2.checked + spacer + shootPosition3.checked + spacer + shootPosition4.checked + spacer + trap + spacer + ((stopWatchValue-1)/10) + spacer + onStage + spacer + robotDeath.checked + spacer + commentField.value + spacer + timeSubmitted + "\n";
 
           // fixes bug in QR Library where the code may not work right between these number of characters
           if (data.length > 192 && data.length < 220) {
@@ -1977,11 +2045,19 @@
           }
           
         } else {
-          generateBtn.innerText = "Missing Fields!";
-          setInterval(generateBtnReset, 2000);
-          function generateBtnReset() {
-            generateBtn.innerText = "Generate";
+            if (!teamList.includes(teamNumberField.value)) {
+                generateBtn.innerText = "Invalid Team!";
+                setInterval(generateBtnReset, 2000);
+                function generateBtnReset() {
+                generateBtn.innerText = "Generate";
+                }
+            } else {
+                generateBtn.innerText = "Missing Fields!";
+                setInterval(generateBtnReset, 2000);
+                function generateBtnReset() {
+                generateBtn.innerText = "Generate";
           }
+            }
         }
       } else {
         generateBtn.innerText = "Generated";
@@ -1991,7 +2067,7 @@
         }
         qrcode.clear();
         let spacer = "	";
-        let data = scouterName.value + spacer + matchNumberField.value + spacer + teamNumberField.value + spacer + noShow.checked + spacer + startPosition + spacer + preLoadScored.checked + spacer + leftStartZone.checked + spacer + autoAMP + spacer + autoAMPMissed + spacer + autoSpeaker + spacer + autoSpeakerMissed + spacer + teleAMP + spacer + teleAMPMissed + spacer + teleSpeaker + spacer + teleSpeakerMissed + spacer + pass + spacer + shootPosition1.checked + spacer + shootPosition2.checked + spacer + shootPosition3.checked + spacer + shootPosition4.checked + spacer + trap + spacer + ((stopWatchValue-1)/10) + spacer + onStage + spacer + robotDeath.checked + spacer + commentField.value + "\n";
+        let data = scouterName.value + spacer + matchNumberField.value + spacer + teamNumberField.value + spacer + noShow.checked + spacer + startPosition + spacer + leftStartZone.checked + spacer + autoAMP + spacer + autoAMPMissed + spacer + autoSpeaker + spacer + autoSpeakerMissed + spacer + teleAMP + spacer + teleAMPMissed + spacer + teleSpeaker + spacer + teleSpeakerMissed + spacer + pass + spacer + shootPosition1.checked + spacer + shootPosition2.checked + spacer + shootPosition3.checked + spacer + shootPosition4.checked + spacer + trap + spacer + ((stopWatchValue-1)/10) + spacer + onStage + spacer + robotDeath.checked + spacer + commentField.value + spacer + timeSubmitted + "\n";
         qrcode.makeCode(data);
       }     
     }
@@ -2295,16 +2371,6 @@
         }
     }
 
-    var trapDialog = document.getElementById("trapDialog");
-    var trapMap = document.querySelector(".trapMap");
-    var trapMapRotated = document.querySelector(".trapMapRotated");
-    function showTrapMap() {
-        trapDialog.show();
-    }
-    function closeTrapMap() {
-        trapDialog.close();
-    }
-
     var trapMapCounter = 0;
     function rotateTrapMap() {
         if (trapMapCounter == 1) {
@@ -2320,6 +2386,7 @@
 
     var inputFormMatch = document.querySelector(".input-form-match");
     function resetMatch() {
+        matchNumberField.value = parseInt(matchNumberField.value) + 1;
         //reset basic html forms
         inputFormMatch.reset();
         //reset number counters
@@ -2413,6 +2480,20 @@
         correctLevel: QRCode.CorrectLevel.L
     });;
 
+    var pitScouterNameDIV = document.querySelector(".pitScouterNameDIV");
+    //Create and append select list
+    var memberListInput = document.createElement("select");
+    memberListInput.setAttribute("class", "pitScouterName");
+    pitScouterNameDIV.appendChild(memberListInput);
+
+    //Create and append the options
+    for (var i = 0; i < memberList.length; i++) {
+        var option = document.createElement("option");
+        option.setAttribute("value", memberList[i]);
+        option.text = memberList[i];
+        memberListInput.appendChild(option);
+    }
+
     var pitScouterName = document.querySelector(".pitScouterName");
     var pitTeamNumber = document.querySelector(".pitTeamNumber");
     var pitBaseWidth = document.querySelector(".pitBaseWidth");
@@ -2430,10 +2511,6 @@
     var pitSpareNumber = document.querySelector(".pitSpareNumber");
     var pitUniqueFeature = document.querySelector(".pitUniqueFeature");
     var pitRobotQuality = document.querySelector(".pitRobotQuality");
-    var teamHelpRobot = document.querySelector(".teamHelpRobot");
-    var teamHelpMaterials = document.querySelector(".teamHelpMaterials");
-    var teamHelpTools = document.querySelector(".teamHelpTools");
-    var teamHelpExpand = document.querySelector(".teamHelpExpand");
     var pitNotes = document.querySelector(".pitNotes");
     var containerPit = document.querySelector(".containerPit");
     var generateBtnPit = document.querySelector(".generate-btnPit");
@@ -2441,7 +2518,7 @@
     let qr_code_counter_pit = 0;
     generateBtnPit.onclick = function() {
       if (qr_code_counter_pit == 0) {
-        if (pitScouterName.value.length > 0 && pitTeamNumber.value.length > 0) {
+        if (pitScouterName.value.length > 0 && pitTeamNumber.value.length > 0 && teamList.includes(pitTeamNumber.value)) {
             
           qr_code_counter_pit++;
 
@@ -2450,7 +2527,7 @@
           //The spacer automatically puts each input into seperate columns when scanning into Google Sheets
           let spacer = "	";
           // Creates a variable to hold all the data collected
-          let data = pitScouterName.value + spacer + pitTeamNumber.value + spacer + pitBaseWidth.value + spacer + pitBaseLength.value + spacer + pitRobotHeight.value + spacer + pitRobotWeight.value + spacer + scoreCapabilitiesAMP.checked + "," + scoreCapabilitiesSpeaker.checked + "," + scoreCapabilitiesTrap.checked + spacer + pitDriveType.value + spacer + pitShootArea.value + spacer + pitRobotClimbTime.value + spacer + pitRobotLang.value + spacer + pitAutoStrat.value + spacer + pitUniqueFeature.value + spacer + pitRobotQuality.value + spacer + pitDriverExperience.value + spacer + pitSpareNumber.value + spacer + teamHelpRobot.value + "," + teamHelpMaterials.value + "," + teamHelpTools.value + spacer + teamHelpExpand.value + spacer + pitNotes.value + spacer + "\n";
+          let data = pitScouterName.value + spacer + pitTeamNumber.value + spacer + pitBaseWidth.value + spacer + pitBaseLength.value + spacer + pitRobotHeight.value + spacer + pitRobotWeight.value + spacer + scoreCapabilitiesAMP.checked + "," + scoreCapabilitiesSpeaker.checked + "," + scoreCapabilitiesTrap.checked + spacer + pitDriveType.value + spacer + pitShootArea.value + spacer + pitRobotClimbTime.value + spacer + pitRobotLang.value + spacer + pitAutoStrat.value + spacer + pitUniqueFeature.value + spacer + pitRobotQuality.value + spacer + pitDriverExperience.value + spacer + pitSpareNumber.value + spacer + pitNotes.value + spacer + "\n";
 
           // fixes bug in QR Library where the code may not work right between these number of characters
           if (data.length > 192 && data.length < 220) {
@@ -2468,11 +2545,19 @@
           generateBtnPit.innerText = "Generated";
           
         } else {
-          generateBtnPit.innerText = "Missing Fields!";
-          setInterval(generateBtnReset, 2000);
-          function generateBtnReset() {
+          if (!teamList.includes(teamNumberField.value)) {
+            generateBtnPit.innerText = "Invalid Team!";
+            setInterval(generateBtnReset, 2000);
+            function generateBtnReset() {
             generateBtnPit.innerText = "Generate";
-          }
+            }
+          } else {
+                generateBtnPit.innerText = "Missing Fields!";
+                setInterval(generateBtnReset, 2000);
+                function generateBtnReset() {
+                generateBtnPit.innerText = "Generate";
+                }
+            }
         }
       } else {
         generateBtnPit.innerText = "Generated";
@@ -2482,7 +2567,7 @@
         }
         qrcodePit.clear();
         let spacer = "	";
-        let data = pitScouterName.value + spacer + pitTeamNumber.value + spacer + pitBaseWidth.value + spacer + pitBaseLength.value + spacer + pitRobotHeight.value + spacer + pitRobotWeight.value + spacer + scoreCapabilitiesAMP.checked + "," + scoreCapabilitiesSpeaker.checked + "," + scoreCapabilitiesTrap.checked + spacer + pitDriveType.value + spacer + pitShootArea.value + spacer + pitRobotClimbTime.value + spacer + pitRobotLang.value + spacer + pitAutoStrat.value + spacer + pitUniqueFeature.value + spacer + pitRobotQuality.value + spacer + pitDriverExperience.value + spacer + pitSpareNumber.value + spacer + teamHelpRobot + "," + teamHelpMaterials + "," + teamHelpTools + spacer + teamHelpExpand + spacer + pitNotes.value + spacer + "\n";
+        let data = pitScouterName.value + spacer + pitTeamNumber.value + spacer + pitBaseWidth.value + spacer + pitBaseLength.value + spacer + pitRobotHeight.value + spacer + pitRobotWeight.value + spacer + scoreCapabilitiesAMP.checked + "," + scoreCapabilitiesSpeaker.checked + "," + scoreCapabilitiesTrap.checked + spacer + pitDriveType.value + spacer + pitShootArea.value + spacer + pitRobotClimbTime.value + spacer + pitRobotLang.value + spacer + pitAutoStrat.value + spacer + pitUniqueFeature.value + spacer + pitRobotQuality.value + spacer + pitDriverExperience.value + spacer + pitSpareNumber.value + spacer + pitNotes.value + spacer + "\n";
         qrcodePit.makeCode(data);
       }
     }
@@ -2530,7 +2615,7 @@
     let qr_code_counter_super = 0;
     generateBtnSuper.onclick = function() {
       if (qr_code_counter_super == 0) {
-        if (superTeamNumber.value.length > 0) {
+        if (superTeamNumber.value.length > 0 && teamList.includes(superTeamNumber.value)) {
             
           qr_code_counter_super++;
 
@@ -2557,11 +2642,19 @@
           generateBtnSuper.innerText = "Generated";
           
         } else {
-          generateBtnSuper.innerText = "Missing Team Number!";
-          setInterval(generateBtnReset, 2000);
-          function generateBtnReset() {
-            generateBtnSuper.innerText = "Generate";
+            if (!teamList.includes(superTeamNumber)) {
+                generateBtnSuper.innerText = "Invalid Team!";
+                setInterval(generateBtnReset, 2000);
+                function generateBtnReset() {
+                generateBtnSuper.innerText = "Generate";
+                }
+            } else {
+                generateBtnSuper.innerText = "Enter Team!";
+                setInterval(generateBtnReset, 2000);
+                function generateBtnReset() {
+                generateBtnSuper.innerText = "Generate";
           }
+            }
         }
       } else {
         generateBtn.innerText = "Generated";
@@ -2620,6 +2713,7 @@
 
   var inputFormSuper = document.querySelector(".inputFormSuper");
     function resetSuper() {
+        superMatchNumber.value = parseInt(superMatchNumber.value) + 1;
         //reset basic html forms
         inputFormSuper.reset();
         //removes Previous QRCode
