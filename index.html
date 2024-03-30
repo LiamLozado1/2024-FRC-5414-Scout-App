@@ -1097,9 +1097,7 @@
 
         #fullscreenBTN {
             display: none;
-        }
-
-        
+        }        
     }
   </style>
 
@@ -1996,7 +1994,8 @@
     var onStage = document.querySelectorAll('input[name="onStage"]')
     var robotDeath = document.querySelector(".robotDeath");
     var commentField = document.querySelector(".commentField");
-    var timeSubmitted = new Date();
+    var timeSubmitted = new Date().toLocaleDateString('en-us', {
+    day:"numeric", hour:"numeric", minute:"numeric", second:"numeric"}) ;
 
     let robotImage = document.querySelector(".robotImage");
 
