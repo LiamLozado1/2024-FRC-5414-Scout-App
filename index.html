@@ -17,7 +17,7 @@
     <button onclick="switchDialogMatch()" class="switchDialogMatch">Match</button>
     <button onclick="switchDialogPit()" class="switchDialogPit">Pit</button>
     <button onclick="switchDialogSuper()" class="switchDialogSuper">Super</button>
-    <p class="version">Version: 1.9.0 as of 4/16/24</p>
+    <p class="version">Version: 1.9.1 as of 7/30/24</p>
   </dialog>
 
   <p class="mainTitle">Scout App</p>
@@ -289,7 +289,7 @@
             <textarea type="text" class="pitNotes" placeholder="Any extra information?"></textarea>
         </form>
         <div class="appComment">  
-            <p>Take a picture of their robot with your phone then send the picture to Corvus or Miles.</p>
+            <p>Take a picture of their robot with your phone then send the picture to the scout master.</p>
         </div>
 
         <button class="generate-btnPit" id="generate-btnPit">Generate</button>
@@ -1861,14 +1861,14 @@
   <script defer>
     //Create the list to check if the scouter inputs the right team
     let teamList = [
-        "176", "177", "245", "324", "343", "424", "461", "539", "548", "670", "829","862", "868", "876", "971", "987", "1023", "1153", "1241", "1285", "1296", "1540", "1577", "1676", "1732", "1807", "1923", "2056", "2122", "2337","2468", "2486", "2637", "2638", "2714", "2826", "3005", "3018", "3322", "3464", "3467", "3572", "3604", "3683", "3928", "3990", "4096", "4122", "4143", "4561", "4655", "4907", "5112", "5114", "5285", "5414", "5484", "5822", "5851", "5951", "6002", "6081", "6147", "6806", "7558", "7762", "8817", "9312", "9404", "9408", "9450", "9462", "9478", "9586", "9692"
-]
+        "418", "2468", "2583", "2687", "2789", "2881", "3847", "5414", "5417", "5788", "6357", "6377", "8515", "9054", "9140", "9991", "9993", "9994", "9998"
+    ]
 
     //Create variables for each input
     var container = document.querySelector(".container");
     var scouterNameDIV = document.querySelector(".scouterNameDIV");
-    //Create a list of your scouters so there names are consistant
-    var memberList = [ "BBQ","Robo-Colts","Alexander", "Andy", "Andrew", "Arun", "Blake", "Bowen", "Bradley", "Bryan", "Cameron L", "Cameron O", "Cate", "Che", "Chenyu", "Chris", "Corvus", "Cypher", "Danny", "Kimi", "Eduardo", "Emmeline", "Ethan", "Gabriel", "Grace", "Grae", "Hantao", "Hitesh", "Ian", "James", "Jayden", "Jasper", "Jennifer", "Johnny", "JP", "Junxi", "Katia", "Liam", "Lori", "Luke", "Maya", "Mia", "Miles", "Misha", "Myra", "Natalie", "Nazeerul", "Noah", "Nuhan", "Retvin", "Roy", "Sean", "Sergio", "Shaotan", "Sofia", "Zion"
+    //Create a list of your scouters so their names are consistant
+    var memberList = [ "BBQ","Robo-Colts", "Alana", "Alex", "Andy", "Andrew", "Arun", "Blake", "Bowen", "Bradley", "Bryan", "Cameron L", "Cameron O", "Cate", "Che", "Chenyu", "Chris", "Corvus", "Cypher", "Danny", "Katherine", "Kimi", "Eduardo", "Emmeline", "Ethan", "Gabriel", "Grace", "Grae", "Hantao", "Hitesh", "Ian", "James", "Jayden", "Jasper", "Jennifer", "Jett", "Johnny", "Jorge", "JP", "Junxi", "Katia", "Liam", "Lori", "Luke", "Maya", "Mia", "Miles", "Misha", "Myra", "Natalie", "Nazeer", "Noah", "Nuhan", "Retvin", "Roy", "Sean", "Sergio", "Shaotan", "Sofia", "Zion"
     ];
     //Create and append select list
     var memberListInput = document.createElement("select");
